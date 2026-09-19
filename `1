@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Секретное приглашение 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg-1: #FCEAF3;
+    --bg-2: #FFF7FA;
+    --white: #FFFFFF;
+    --pink: #C94F7C;
+    --rose-dark: #9F3D63;
+    --soft: #F3D5E1;
+    --text: #5C3A48;
+    --border: #E7B7C9;
+    --serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "Montserrat", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { min-height: 100%; }
+  body {
+    background: radial-gradient(1200px 700px at 50% -10%, #FFFFFF 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    background-color: var(--bg-1);
+    color: var(--text);
+    font-family: var(--serif);
+    overflow-x: hidden;
+  }
+
+  /* ---------- phone frame ---------- */
+  .app {
+    position: relative;
+    width: 100%;
+    max-width: 390px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0 auto;
+    padding: 20px 18px 32px;
+    overflow: hidden;
+  }
+  @media (min-width: 600px) {
+    body { padding: 28px 0; }
+    .app {
+      min-height: 780px;
+      border-radius: 40px;
+      background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+      box-shadow: 0 30px 80px rgba(159, 61, 99, .18), 0 0 0 1px rgba(231, 183, 201, .6);
+    }
+  }
+
+  .screen { position: relative; z-index: 2; }
+  .hidden { display: none !important; }
+
+  /* ---------- decorations ---------- */
+  .deco {
+    position: absolute;
+    z-index: 1;
+    color: var(--border);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    animation: floaty 7s ease-in-out infinite;
+  }
+  .deco.spin { animation: spin 26s linear infinite; }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: .7; }
+    50% { transform: translateY(-10px) rotate(8deg); opacity: 1; }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- screen 1: password ---------- */
+  .search-bar {
+    display: flex; align-items: center; gap: 10px;
+    height: 46px; padding: 0 18px;
+    margin: 14px 6px 0;
+    background: rgba(255,255,255,.75);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--border);
+    font-family: var(--sans); font-size: 13px;
+  }
+  .search-bar .dots { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); opacity: .7; }
+
+  .lock-wrap {
+    min-height: calc(100vh - 110px);
+    min-height: calc(100dvh - 110px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px 0 40px;
+  }
+  .lock-card {
+    width: 100%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF9FB 100%);
+    border: 1px solid rgba(231,183,201,.6);
+    border-radius: 30px;
+    padding: 38px 26px 30px;
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(201, 79, 124, .14);
+    animation: rise .9s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  .envelope { width: 64px; height: 64px; margin: 0 auto 18px; display: block; animation: floaty 6s ease-in-out infinite; }
+  .lock-card h1 {
+    font-weight: 500; font-size: 30px; line-height: 1.1; color: var(--rose-dark);
+    letter-spacing: .2px;
+  }
+  .lock-card p.hint {
+    margin-top: 10px; font-style: italic; font-size: 19px; color: var(--text); opacity: .85;
+  }
+  .field { margin-top: 26px; }
+  .field input {
+    width: 100%; height: 58px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 0 20px;
+    font-family: var(--sans); font-size: 18px; letter-spacing: 4px; text-align: center;
+    color: var(--rose-dark);
+    outline: none;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .field input::placeholder { color: #D9B5C4; letter-spacing: 2px; font-size: 14px; }
+  .field input:focus { border-color: var(--pink); box-shadow: 0 0 0 5px rgba(201,79,124,.12); }
+  .field.shake { animation: shake .5s; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); } 18% { transform: translateX(-9px); }
+    36% { transform: translateX(8px); } 54% { transform: translateX(-6px); } 72% { transform: translateX(4px); }
+  }
+  .error {
+    height: 22px; margin-top: 12px;
+    font-family: var(--sans); font-size: 13px; color: var(--pink);
+    opacity: 0; transition: opacity .3s;
+  }
+  .error.show { opacity: 1; }
+
+  .btn {
+    display: block; width: 100%;
+    height: 58px;
+    border: 0; cursor: pointer;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #D0587F, var(--pink));
+    color: #fff;
+    font-family: var(--sans); font-weight: 500; font-size: 16px; letter-spacing: .3px;
+    box-shadow: 0 10px 24px rgba(201,79,124,.35);
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+  }
+  .btn:hover { transform: scale(1.02); box-shadow: 0 14px 30px rgba(201,79,124,.42); }
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible, .field input:focus-visible { outline: 2px solid var(--rose-dark); outline-offset: 3px; }
+
+  /* ---------- screen 2: invitation ---------- */
+  .invite {
+    position: relative;
+    margin-top: 10px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF8FB 100%);
+    border: 1px solid rgba(231,183,201,.6);
+    border-radius: 34px;
+    padding: 44px 22px 34px;
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(201,79,124,.14);
+    overflow: hidden;
+  }
+  .invite.enter { animation: enter 1.1s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes enter { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+
+  .pill {
+    display: inline-block;
+    padding: 9px 22px;
+    border-radius: 999px;
+    background: var(--rose-dark);
+    color: #FBE4EE;
+    font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: 2.5px;
+  }
+  .invite h2 {
+    margin-top: 24px;
+    font-weight: 500; font-size: 44px; line-height: 1.02; color: var(--rose-dark);
+    letter-spacing: -.3px;
+  }
+  .rule {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin: 22px auto 24px; width: 70%;
+    color: var(--border); font-size: 14px;
+  }
+  .rule::before, .rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border)); }
+  .rule::after { background: linear-gradient(270deg, transparent, var(--border)); }
+
+  .dear { font-size: 26px; font-style: italic; font-weight: 500; color: var(--pink); }
+  .msg { margin: 14px auto 0; font-size: 20px; line-height: 1.5; max-width: 320px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 28px; }
+  .info {
+    background: #FFF4F8;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px 6px 14px;
+    min-height: 118px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px;
+    box-shadow: 0 6px 16px rgba(201,79,124,.08);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+  }
+  .info:hover { transform: translateY(-4px); box-shadow: 0 12px 22px rgba(201,79,124,.14); }
+  .info .ic { font-size: 22px; line-height: 1; }
+  .info .lb { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 1.6px; color: var(--pink); }
+  .info .vl { font-size: 19px; font-weight: 600; line-height: 1.15; color: var(--rose-dark); overflow-wrap: anywhere; }
+
+  .dress {
+    margin-top: 12px;
+    background: #FFFFFF;
+    border: 1px dashed var(--border);
+    border-radius: 20px;
+    padding: 14px 16px 15px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .dress .lb { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 1.6px; color: var(--pink); }
+  .dress .dv { font-size: 20px; font-style: italic; line-height: 1.3; color: var(--rose-dark); }
+
+  /* subtle endless background fall */
+  .ambient-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+  .amb { position: absolute; top: -30px; animation: drift linear both; will-change: transform, opacity; }
+  .amb.petal { width: 8px; height: 11px; border-radius: 80% 0 80% 0; }
+  @keyframes drift {
+    0%   { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+    12%  { opacity: var(--o, .3); }
+    85%  { opacity: var(--o, .3); }
+    100% { transform: translate3d(var(--dx, 0px), var(--dy, 900px), 0) rotate(var(--r, 240deg)); opacity: 0; }
+  }
+
+  .wait { margin-top: 32px; font-style: italic; font-size: 24px; color: var(--text); }
+  .flowers { margin: 26px 0 26px; color: var(--pink); font-size: 20px; letter-spacing: 14px; opacity: .85; }
+
+  /* ---------- final ---------- */
+  .final {
+    position: absolute; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 30px 28px; text-align: center;
+    background: linear-gradient(180deg, rgba(255,247,250,.96), rgba(252,234,243,.96));
+    opacity: 0; pointer-events: none; transition: opacity 1.2s ease;
+  }
+  .final.show { opacity: 1; pointer-events: auto; }
+  .final .big-heart { width: 96px; height: 96px; animation: beat 1.9s ease-in-out infinite; filter: drop-shadow(0 12px 18px rgba(201,79,124,.3)); }
+  @keyframes beat { 0%,100% { transform: scale(1); } 14% { transform: scale(1.12); } 28% { transform: scale(1); } 42% { transform: scale(1.08); } 70% { transform: scale(1); } }
+  .final h3 { margin-top: 28px; font-size: 36px; font-weight: 500; line-height: 1.12; color: var(--rose-dark); }
+  .final p { margin-top: 14px; font-size: 24px; font-style: italic; color: var(--text); }
+  .final .t { opacity: 0; transform: translateY(12px); }
+  .final.show .t { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) forwards; }
+  .final.show .t1 { animation-delay: .5s; }
+  .final.show .t2 { animation-delay: 1.1s; }
+
+  /* ---------- falling particles ---------- */
+  .fall-layer { position: absolute; inset: 0; z-index: 8; pointer-events: none; overflow: hidden; }
+  .p { position: absolute; top: -40px; will-change: transform, opacity; animation-name: drop; animation-timing-function: cubic-bezier(.3,.1,.5,1); animation-fill-mode: both; }
+  .p.petal { width: 12px; height: 17px; border-radius: 80% 0 80% 0; }
+  @keyframes drop {
+    0%   { transform: translate3d(0, -30px, 0) rotate(0deg) scale(var(--s, 1)); opacity: 0; }
+    10%  { opacity: 1; }
+    100% { transform: translate3d(var(--dx, 0px), var(--dy, 800px), 0) rotate(var(--r, 360deg)) scale(var(--s, 1)); opacity: 0; }
+  }
+
+  @media (max-width: 360px) {
+    .invite { padding: 38px 14px 30px; }
+    .invite h2 { font-size: 38px; }
+    .info .vl { font-size: 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <div class="ambient-layer" id="ambient" aria-hidden="true"></div>
+
+  <!-- decorations -->
+  <span class="deco spin" style="top:70px; left:16px; font-size:22px;">✿</span>
+  <span class="deco" style="top:150px; right:20px; font-size:18px; animation-delay:-2s;">❀</span>
+  <span class="deco spin" style="bottom:120px; left:22px; font-size:20px; animation-delay:-5s;">❀</span>
+  <span class="deco" style="bottom:60px; right:26px; font-size:24px; animation-delay:-3s;">✿</span>
+  <span class="deco" style="top:46%; right:10px; font-size:14px; animation-delay:-4s;">♡</span>
+  <span class="deco" style="top:38%; left:8px; font-size:14px; animation-delay:-1s;">♡</span>
+
+  <!-- SCREEN 1 -->
+  <section class="screen" id="lock">
+    <div class="search-bar" aria-hidden="true"><span>✿</span><span class="dots"></span><span>♡</span></div>
+    <div class="lock-wrap">
+      <div class="lock-card" id="lockCard">
+        <svg class="envelope" viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="6" y="14" width="52" height="38" rx="8" fill="#fff" stroke="#E7B7C9" stroke-width="2"/>
+          <path d="M8 18l24 18 24-18" fill="none" stroke="#E7B7C9" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M32 46c-7-5-10-8.500-10-12a5.500 5.500 0 0 1 10-3 5.500 5.500 0 0 1 10 3c0 3.500-3 7-10 12z" fill="#C94F7C" transform="translate(0 -3) scale(1) "/>
+        </svg>
+        <h1>У тебя есть секретное приглашение</h1>
+        <p class="hint">Введи пароль, чтобы открыть</p>
+        <div class="field" id="field">
+          <input id="pass" type="password" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="••••" aria-label="Пароль">
+        </div>
+        <div class="error" id="err" role="status" aria-live="polite">Попробуй ещё раз ❤️</div>
+        <button class="btn" id="openBtn" type="button">Открыть</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2 -->
+  <section class="screen hidden" id="invSection">
+    <div class="invite" id="invite">
+      <span class="pill" id="pill"></span>
+      <h2>Приглашение<br>на свидание</h2>
+      <div class="rule"><span>✿</span></div>
+      <p class="dear" id="dear"></p>
+      <p class="msg" id="msg"></p>
+
+      <div class="cards">
+        <div class="info"><span class="ic">📅</span><span class="lb">ДАТА</span><span class="vl" id="vDate"></span></div>
+        <div class="info"><span class="ic">🕘</span><span class="lb">ВРЕМЯ</span><span class="vl" id="vTime"></span></div>
+        <div class="info"><span class="ic">📍</span><span class="lb">МЕСТО</span><span class="vl" id="vPlace"></span></div>
+      </div>
+
+      <div class="dress">
+        <span class="lb">ДРЕСС-КОД</span>
+        <span class="dv" id="vDress"></span>
+      </div>
+
+      <div class="flowers" aria-hidden="true">✿ ❀ ✿</div>
+      <button class="btn" id="acceptBtn" type="button">Принимаю приглашение 💐</button>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <div class="final" id="final" aria-live="polite">
+    <svg class="big-heart" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E0668E"/><stop offset="1" stop-color="#B8406D"/></linearGradient></defs>
+      <path d="M32 56C14 43 6 33 6 22a13 13 0 0 1 26-4 13 13 0 0 1 26 4c0 11-8 21-26 34z" fill="url(#hg)"/>
+    </svg>
+    <h3 class="t t1" id="finalTitle"></h3>
+    <p class="t t2" id="finalSub"></p>
+  </div>
+
+  <div class="fall-layer" id="fall"></div>
+</div>
+
+<script>
+  // ==================== НАСТРОЙКИ ====================
+  const SECRET_CODE = "1512";            // ← пароль
+
+  const invitation = {
+    name:  "Александра",                 // ← имя
+    pill:  "19 СЕНТЯБРЯ",                // ← надпись в капсуле сверху
+    date:  "19 сентября",                // ← дата в карточке
+    time:  "16:00",                      // ← время
+    place: "Секрет... 🤫",               // ← место
+    dressCode: "Светлая одежда, элегантно и нарядно", // ← дресс-код
+    message: "В этот прекрасный день я хочу пригласить тебя на особенный вечер, наполненный теплом, нежностью и незабываемыми моментами.",
+    finalTitle: "Я буду ждать тебя ❤️",
+    finalSub: "До встречи в 19:00 🌷"     // ← обновится автоматически из time
+  };
+  // ===================================================
+
+  const $ = (id) => document.getElementById(id);
+
+  $("pill").textContent = invitation.pill;
+  $("dear").textContent = "Дорогая " + invitation.name + ",";
+  $("msg").textContent = invitation.message;
+  $("vDate").textContent = invitation.date;
+  $("vTime").textContent = invitation.time;
+  $("vPlace").textContent = invitation.place;
+  $("finalTitle").textContent = invitation.finalTitle;
+  $("finalSub").textContent = "До встречи в " + invitation.time + " 🌷";
+
+  $("vDress").textContent = invitation.dressCode;
+
+  // ---------- ambient endless fall (subtle) ----------
+  const ambient = $("ambient");
+  const ambHeart = ["#E9A3BC", "#F3B2C8", "#DE7A9C"];
+  const ambPetal = ["#F8CFDD", "#F3B2C8", "#FBE1EA"];
+  function spawnAmbient() {
+    if (document.hidden || ambient.childElementCount > 26) return;
+    const W = ambient.clientWidth || 390;
+    const H = ambient.clientHeight || 800;
+    const el = document.createElement("span");
+    const kind = Math.random();
+    const dur = 11000 + Math.random() * 7000;
+    el.className = "amb";
+    el.style.left = Math.random() * (W - 16) + "px";
+    el.style.setProperty("--o", (0.18 + Math.random() * 0.2).toFixed(2));
+    el.style.setProperty("--dx", (Math.random() * 90 - 45).toFixed(0) + "px");
+    el.style.setProperty("--dy", (H + 60) + "px");
+    el.style.setProperty("--r", (Math.random() * 300 - 150).toFixed(0) + "deg");
+    el.style.animationDuration = dur + "ms";
+    if (kind < 0.35) {
+      el.style.width = el.style.height = (9 + Math.random() * 7) + "px";
+      el.innerHTML = heartSVG(ambHeart[(Math.random() * ambHeart.length) | 0]);
+    } else if (kind < 0.75) {
+      el.classList.add("petal");
+      el.style.background = ambPetal[(Math.random() * ambPetal.length) | 0];
+    } else {
+      el.textContent = flowerChars[(Math.random() * 2) | 0];
+      el.style.fontSize = (11 + Math.random() * 6) + "px";
+      el.style.color = "#E7B7C9";
+    }
+    ambient.appendChild(el);
+    setTimeout(() => el.remove(), dur + 200);
+  }
+  setInterval(spawnAmbient, 900);
+  for (let i = 0; i < 6; i++) setTimeout(spawnAmbient, i * 350);
+
+  // ---------- password ----------
+  const pass = $("pass"), err = $("err"), field = $("field");
+
+  function tryOpen() {
+    const val = pass.value.trim().toLowerCase();
+    if (val === String(SECRET_CODE).toLowerCase()) {
+      err.classList.remove("show");
+      const card = $("lockCard");
+      card.style.transition = "opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)";
+      card.style.opacity = "0";
+      card.style.transform = "translateY(-14px) scale(.96)";
+      setTimeout(() => {
+        $("lock").classList.add("hidden");
+        $("invSection").classList.remove("hidden");
+        $("invite").classList.add("enter");
+        window.scrollTo({ top: 0 });
+        burst(22, { soft: true });
+      }, 800);
+    } else {
+      err.classList.add("show");
+      field.classList.remove("shake");
+      void field.offsetWidth;
+      field.classList.add("shake");
+    }
+  }
+  $("openBtn").addEventListener("click", tryOpen);
+  pass.addEventListener("keydown", (e) => { if (e.key === "Enter") tryOpen(); });
+  pass.addEventListener("input", () => err.classList.remove("show"));
+
+  // ---------- particles ----------
+  const fall = $("fall");
+  const heartSVG = (c) =>
+    '<svg viewBox="0 0 64 64" width="100%" height="100%"><path d="M32 56C14 43 6 33 6 22a13 13 0 0 1 26-4 13 13 0 0 1 26 4c0 11-8 21-26 34z" fill="' + c + '"/></svg>';
+  const heartColors = ["#E58AAA", "#F3B2C8", "#D0587F", "#C0304F", "#F6C6D6"];
+  const petalColors = ["#F8CFDD", "#F3B2C8", "#FBE1EA", "#EFA0BB"];
+  const flowerChars = ["✿", "❀"];
+
+  function burst(count, opts) {
+    const soft = opts && opts.soft;
+    const W = fall.clientWidth || 390;
+    const H = fall.clientHeight || 800;
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("span");
+      el.className = "p";
+      const kind = Math.random();
+      const s = 0.7 + Math.random() * 0.9;
+      const dur = 4200 + Math.random() * 4200;
+      const delay = Math.random() * (soft ? 900 : 2600);
+      const startY = Math.random() < 0.55 ? -40 : Math.random() * H * 0.5;
+      el.style.left = Math.random() * (W - 20) + "px";
+      el.style.top = startY + "px";
+      el.style.setProperty("--s", s.toFixed(2));
+      el.style.setProperty("--dx", (Math.random() * 120 - 60).toFixed(0) + "px");
+      el.style.setProperty("--dy", (H * (0.55 + Math.random() * 0.6)).toFixed(0) + "px");
+      el.style.setProperty("--r", (Math.random() * 540 - 270).toFixed(0) + "deg");
+      el.style.animationDuration = dur + "ms";
+      el.style.animationDelay = delay + "ms";
+
+      if (kind < 0.38) {
+        el.style.width = el.style.height = (16 + Math.random() * 10) + "px";
+        el.innerHTML = heartSVG(heartColors[(Math.random() * heartColors.length) | 0]);
+      } else if (kind < 0.78) {
+        el.className = "p petal";
+        el.style.background = petalColors[(Math.random() * petalColors.length) | 0];
+      } else {
+        el.textContent = flowerChars[(Math.random() * 2) | 0];
+        el.style.fontSize = (16 + Math.random() * 8) + "px";
+        el.style.color = Math.random() < 0.5 ? "#E58AAA" : "#C94F7C";
+      }
+      fall.appendChild(el);
+      setTimeout(() => el.remove(), dur + delay + 200);
+    }
+  }
+
+  // ---------- accept ----------
+  let accepted = false;
+  $("acceptBtn").addEventListener("click", () => {
+    if (accepted) return;
+    accepted = true;
+    burst(70);
+    setTimeout(() => burst(50), 1400);
+    setTimeout(() => {
+      $("final").classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1800);
+    setTimeout(() => burst(40), 3600);
+  });
+</script>
+</body>
+</html>
